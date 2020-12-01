@@ -18,7 +18,6 @@ public class FramedMessage : Node2D
     public void OnAcceptClick()
     {
         Visible = false;
-        // GD.Print("CLICKED !!!");
         GetTree().Paused = false;
     }
 

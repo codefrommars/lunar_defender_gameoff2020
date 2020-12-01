@@ -26,7 +26,6 @@ public class Stage : ReferenceRect
     private StageScript stageScript;
     private Node2D transitions;
     public Home Machine { get; private set; }
-    // private Node2D doors;
 
     public override void _Ready()
     {
@@ -64,11 +63,7 @@ public class Stage : ReferenceRect
             doors[i] = doorsNode.GetChild<Door>(i);
         }
 
-
-
         transitions = GetNode<Node2D>("Transitions");
-
-        // GD.Print(Name);
 
         if (!HasNode("ScriptSequence"))
             return;
@@ -141,11 +136,6 @@ public class Stage : ReferenceRect
                 doors[i].Close();
         }
     }
-
-    // public bool HasPlayerSpawn()
-    // {
-    //     return HasNode("PlayerSpawn");
-    // }
 
     public Vector2 GetPlayerSpawn()
     {

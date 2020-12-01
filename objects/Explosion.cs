@@ -6,7 +6,6 @@ public class Explosion : CPUParticles2D
     private Timer timer;
     private AnimatedSprite sprite;
 
-    // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         timer = GetNode<Timer>("Timer");

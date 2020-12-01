@@ -32,6 +32,6 @@ public class BaseLevel : Node2D
 
     public Stage GetInitialStage()
     {
-        return GetStageAt(PlayerStart.GlobalPosition);//stages.GetChild<Stage>(0);
+        return GetStageAt(PlayerStart.GlobalPosition);
     }
 }

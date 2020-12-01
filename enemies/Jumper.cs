@@ -8,7 +8,6 @@ public class Jumper : BaseEnemy
 
     protected WaitState STATE_BEHAVIOR_WAIT_FOR_JUMP;
 
-    // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         base._Ready();
@@ -25,7 +24,6 @@ public class Jumper : BaseEnemy
     public void OnWaitForJumpEnded()
     {
         Movement.Jump();
-        // STATE_BEHAVIOR_WAIT_FOR_JUMP.Reset(WaitingDuration);
     }
     #endregion
 

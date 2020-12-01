@@ -27,25 +27,17 @@ public class DroneA : BaseEnemy
         floatingTime = 0;
     }
 
-    //Move to place
-    //Shoot player
     protected override FSM BuildStateMachine()
     {
-        //STATE_MOVING_TO = new WaitState(OnWalkingUpdate, OnWalkingEnter, OnWalkingExit);
-
         STATE_SHOOT_ONE = new WaitState(shootingTime)
         {
             OnExit = Shoot,
-            //OnExit = OnShootExit,
         };
-
-        // STATE_SHOOT_THREE = new FSM.State(OnShootingThreeUpdate, OnShootThreeEnter, OnShootExit);
 
         STATE_MOVING_TO = new WaitState(movingTime, STATE_SHOOT_ONE)
         {
             OnEnter = OnMovingToEnter,
             OnExit = OnMovingToExit
-            // OnReenterCallback = OnMovingToExit
         };
 
         STATE_SHOOT_ONE.NextState = STATE_MOVING_TO;
@@ -56,15 +48,9 @@ public class DroneA : BaseEnemy
     public void MoveTo(Vector2 percentage, float duration)
     {
         Vector2 target = MoonHunter.Instance.RelativeToGlobal(percentage);
-        // GD.Print("Move from: " + GlobalPosition + " to: " + target);
         moveTween.InterpolateProperty(this, "position", GlobalPosition, target, duration);
         moveTween.Start();
     }
-
-    // protected override void SetupMovement()
-    // {
-    //     base.SetupMovement();
-    // }
 
     public override void ProcessMovement(float delta)
     {
@@ -76,7 +62,6 @@ public class DroneA : BaseEnemy
         floatingTime += delta;
         float y = (float)(20 * Math.Sin(floatingTime * 2 * Math.PI));
         body.Position = new Vector2(0, y);
-
     }
 
     protected override void ConfigureBullet(Bullet bullet)
@@ -87,13 +72,8 @@ public class DroneA : BaseEnemy
 
     public void OnMovingToEnter()
     {
-        //Pick a random position
-        //0.2f, 0.8f, 0.2f, 0.5f
         Vector2 position = MoonHunter.Instance.GetRandom(FlyingArea);
-        // float duration = 2.0f;
-
         MoveTo(position, movingTime);
-
     }
 
     public void OnMovingToExit()
@@ -106,27 +86,11 @@ public class DroneA : BaseEnemy
         ConfigureBullet(bullet);
     }
 
-    // public void OnShootEnter()
-    // {
-    //     Shoot()
-    // }
-
     public void OnShootThreeEnter()
     {
         Bullet bullet = ShootAt(BulletType, GlobalPosition, MoonHunter.Instance.Player.GlobalPosition);
         ConfigureBullet(bullet);
-
-        // Vector2 direction = GlobalPosition.DirectionTo(MoonHunter.Instance.Player.GlobalPosition);
-
-        // Bullet bullet = MoonHunter.Instance.NewProjectile<Bullet>(BulletType);
-        // bullet.Position = GlobalPosition;
-        // bullet.SetBulletRotation(direction.Angle());
     }
-
-    // public void OnShootExit()
-    // {
-    //     // animatedSprite.Stop();
-    // }
 
     private float inShootingTime;
 

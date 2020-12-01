@@ -63,20 +63,6 @@ public class MoonHunter
 
     }
 
-    // public static class Stages
-    // {
-    //     // public const string TEST = "res://levels/level_test/TestLevel.tscn";
-    //     public const string TEST_0 = "res://levels/level-test/LevelTest00.tscn";
-    //     public const string TEST_1 = "res://levels/level_test/level_test_1.tscn";
-    //     public const string SURFACE_0 = "res://levels/moon-surface/surface_0.tscn";
-    //     public const string SURFACE_1 = "res://levels/moon-surface/surface_1.tscn";
-    // }
-
-    // public BaseStage GetStageFromCurrentLevel(string name)
-    // {
-    //     return LevelManager.GetStage(name);
-    // }
-
     public Random Rand { get; private set; }
 
     private MoonHunter()
@@ -100,12 +86,7 @@ public class MoonHunter
     public void StartGame()
     {
         GameState = new MoonHunterState();
-        // GameState.LastSaveStage = GameState.CurrentLevel.StartingStage;
         GoToLastSave();
-        // ScreenManager.Instance.GoToGameplay(stage);
-
-        // ScreenManager.Instance.GoToTitle();
-        // ScreenManager.Instance.GoToGameOver();
     }
 
     public void RegisterGameplayScreen(GameplayScreen screen)
@@ -115,19 +96,9 @@ public class MoonHunter
 
     public void GoToLastSave()
     {
-        // LevelManager.FlushCache();
-        // LevelManager.LoadLevel(GameState.CurrentLevel);
 
         placedMines = 0;
-        // BaseStage stage = LevelManager.GetStage(GameState.LastSaveStage);
         ScreenManager.Instance.GoToGameplay(GameState);
-    }
-
-    public void Continue()
-    {
-        //Go to Gameplayscreen
-
-        //Instance it in Gameplayscreen
     }
 
     public void PlayerDied()
@@ -190,7 +161,6 @@ public class MoonHunter
         mine.GlobalPosition = globalPosition;
         gameplayScreen.AddProjectile(mine);
         SoundManager.Instance.ArmMineAudioPlayer.Play();
-        // mine.ApplyImpulse(new Vector2(20, 20), direction * 800);
         MoonHunterState.Mines += 1;
         placedMines++;
 
@@ -248,7 +218,6 @@ public class MoonHunter
         loot.GlobalPosition = globalPosition;
         loot.Ammount = ammount;
 
-        // gameplayScreen.AddProjectile(loot);
         gameplayScreen.CallDeferred("AddProjectile", loot);
 
         loot.Inertia = (float)rand.NextDouble() * 500;
@@ -292,28 +261,16 @@ public class MoonHunter
         dustN.Start();
     }
 
-    // public void TriggerTransition(StagePortal portal)
-    // {
-    // 	gameplayScreen.CallDeferred("TriggerTransition", portal);
-    // }
     public void TriggerTransition(StageTransition transition)
     {
         gameplayScreen.CallDeferred("TriggerTransition", transition);
     }
 
-    // public void TransitionEnded(StagePortal portal)
-    // {
-    //     gameplayScreen.CallDeferred("TransitionEnded", portal);
-
-    // }
     public void TransitionEnded(StageTransition transition)
     {
         gameplayScreen.CallDeferred("TransitionEnded", transition);
         placedMines = 0;
-
     }
-
-
 
     public void RemoveEnemyFromEntities(BaseEnemy enemy)
     {
@@ -355,22 +312,10 @@ public class MoonHunter
         Spawner spawner = MoonHunter.Instance.GetSpawner(spawnerIndex);
         BaseEnemy enemy = MoonHunter.Instance.SimpleSpawnEnemy(enemyType, group, parameters);
         enemy.GlobalPosition = spawner.Position;
-        // GD.Print(enemy + " spawned at: " + enemy.GlobalPosition);
         enemy.SetFacingDirection(spawner.FacingDir);
         enemy.Start();
         return enemy;
     }
-
-    // public BaseEnemy SpawnEnemy(int spawnerIndex, string enemyType, string group, params object[] parameters)
-    // {
-    //     Spawner spawner = MoonHunter.Instance.GetSpawner(spawnerIndex);
-    //     BaseEnemy enemy = MoonHunter.Instance.SpawnEnemy(enemyType, group, parameters);
-    //     enemy.GlobalPosition = spawner.Position;
-    //     GD.Print(enemy + " spawned at: " + enemy.GlobalPosition);
-    //     enemy.SetFacingDirection(spawner.FacingDir);
-    //     enemy.Start();
-    //     return enemy;
-    // }
 
     public DroneDrop DropEnemy(int dropIndex, string enemyType, string group, params object[] parameters)
     {
@@ -459,10 +404,6 @@ public class MoonHunter
     public void ShowFramedMessage(string content, string title = "Message")
     {
         gameplayScreen.FramedMessage.ShowMessage(content, title);
-        // gameplayScreen.GetTree().Paused = true;
-        // gameplayScreen.FramedMessage.Title = title;
-        // gameplayScreen.FramedMessage.Content = content;
-        // gameplayScreen.FramedMessage.Visible = true;
     }
 
     public void UnlockPowerup(MoonHunterState.Powerup powerup)

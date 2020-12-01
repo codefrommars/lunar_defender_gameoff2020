@@ -8,29 +8,18 @@ public class Mine : KinematicBody2D
     private AnimatedSprite sprite;
     private Area2D damageArea;
 
-
-    // public static int Placed = 0;
-
     public int Damage { get; set; } = 20;
 
     public override void _Ready()
     {
         damageArea = GetNode<Area2D>("DamageArea");
         sprite = GetNode<AnimatedSprite>("Sprite");
-        // Placed++;
     }
 
     public override void _PhysicsProcess(float delta)
     {
         velocity.y += delta * gravity;
         velocity = MoveAndSlideWithSnap(velocity, new Vector2(60, 60), Vector2.Up, true, 2, 0.785398f, false);
-        // var collision = MoveAndCollide(velocity * delta, false);
-
-        // if (collision != null)
-        // {
-        //     velocity.y = 0;
-        // }
-
     }
 
     public void OnActivationAreaBodyEntered(Node body)
@@ -62,8 +51,7 @@ public class Mine : KinematicBody2D
                 part.DoDamage(Damage);
             }
         }
-        // GD.Print("Explode: " + array.Count);
-        // Placed--;
+
         MoonHunter.Instance.MineExploded();
         QueueFree();
     }

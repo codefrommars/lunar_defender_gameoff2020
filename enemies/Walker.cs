@@ -5,13 +5,10 @@ using System;
 public class Walker : BaseEnemy
 {
     private FSM.State STATE_WALKING;
-
-    // private AnimatedSprite animatedSprite;
     private RayCast2D frontRay;
 
     public override void _Ready()
     {
-        // animatedSprite = GetNode<AnimatedSprite>("Body/AnimatedSprite");
         frontRay = GetNode<RayCast2D>("Body/FrontRay");
 
         base._Ready();
@@ -44,14 +41,12 @@ public class Walker : BaseEnemy
     }
     public void OnWalkingEnter()
     {
-        // animatedSprite.Play("Walking");
         statusAnimationPlayer.Stop();
         statusAnimationPlayer.Play("Walking");
     }
 
     public void OnWalkingExit()
     {
-        // animatedSprite.Stop();
     }
 
 

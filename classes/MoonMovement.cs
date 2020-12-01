@@ -6,14 +6,9 @@ using System.Collections.Generic;
 
 public class MoonMovement
 {
-    // private Vector2 jumpVelocity;
     public Vector2 inputVelocity;
-    // private float damp;
     private static Vector2 UP = new Vector2(0, -1);
     public float MaxTotalSpeed { get; set; }
-
-    // private List<TimedForce> externalForces;
-    //sim movement
 
     public float Gravity { get; set; }
     public float GravityScale { get; set; } = 1;
@@ -23,13 +18,11 @@ public class MoonMovement
 
     public float MaxGravitySpeed { get; set; }
     public bool IsGrounded { get; set; }
-    // public float Friction { set { damp = 1 - value; } }
 
     public float AirDamp { get; set; } = 0;
     public float FloorDamp { get; set; } = 0;
     public bool UseHorizontalDamp { get; set; } = false;
 
-    //input movement
     public float InputHorizonalSpeed { get; set; }
     public float InputVerticalSpeed { get; set; }
     public bool IsFacingRight { get; private set; }
@@ -83,8 +76,6 @@ public class MoonMovement
     public void Move(KinematicBody2D character, float delta)
     {
         inputVelocity.y += GravityScale * Gravity * delta;
-
-        //Move in X
         inputVelocity = character.MoveAndSlide(inputVelocity, UP, true, 4, 0.785398f, false);
 
         if (UseHorizontalDamp)
@@ -96,13 +87,7 @@ public class MoonMovement
 
             inputVelocity.x *= damp;
         }
-        // inputVelocity.x *= 0.2f;
     }
-
-    // public void Recoil(Vector2 direction, float speed)
-    // {
-    //     inputVelocity += direction * speed;
-    // }
 
     public void Jump()
     {

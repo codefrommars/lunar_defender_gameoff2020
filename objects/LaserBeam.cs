@@ -9,11 +9,10 @@ public class LaserBeam : Area2D
 
     private Line2D body;
     private Tween lifeTween;
-    // Called when the node enters the scene tree for the first time.
+
     public override void _Ready()
     {
         body = GetNode<Line2D>("Body");
-        // CollisionShape2D collisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
         lifeTween = new Tween();
         AddChild(lifeTween);
     }

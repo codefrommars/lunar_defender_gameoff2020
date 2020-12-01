@@ -4,13 +4,11 @@ using Godot;
 
 public class Character : KinematicBody2D
 {
-    // public const string ANIMATION_BLINK = "Blink";
     public const string ANIMATION_NORMAL = "Normal";
 
     //Animations
     public const string ANIMATION_IDLE = "Idle";
     public const string ANIMATION_DISSAPEAR = "Dissapear";
-    // public const string ANIMATION_DIE = "Die";
 
     //For Debugging
     public static string[] STATE_NAME = new string[] { "Idle", "Run", "Jump", "Fall" };
@@ -42,13 +40,10 @@ public class Character : KinematicBody2D
     //State machine
     protected FSM machine;
 
-    // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         body = GetNode<Node2D>("Body");
         defaultMaterial = body.Material;
-
-        // floorRaycasts = GetNode<Node2D>("Body/FloorRaycasts");
         debugLabel = GetNode<Label>("DebugLabel");
         motionCollisionShape = GetNode<CollisionShape2D>("MotionCollisionShape");
         statusAnimationPlayer = GetNode<AnimationPlayer>("StatusAnimationPlayer");
@@ -69,7 +64,6 @@ public class Character : KinematicBody2D
         Movement.MaxTotalSpeed = MoonHunter.Constants.PLAYER_MAX_TOTAL_SPEED;
         Movement.MaxGravitySpeed = MoonHunter.Constants.PLAYER_MAX_GRAVITY_SPEED;
 
-        //Setup Movement
         Movement.Horizontal = 0;
         Movement.InputHorizonalSpeed = MoonHunter.Constants.PLAYER_HORIZONTAL_SPEED;
         Movement.SetupJumpPhysics(MoonHunter.Constants.PLAYER_JUMP_HEIGHT, MoonHunter.Constants.PLAYER_MIN_JUMP_HEIGHT, MoonHunter.Constants.PLAYER_JUMP_DURATION);
@@ -77,14 +71,11 @@ public class Character : KinematicBody2D
 
     public override void _PhysicsProcess(float delta)
     {
-        // debugLabel.Text = machine.CurrentState.Name + "";
 
         if (!Enabled)
             return;
 
-        //All the movement can be set here
         machine.Update(delta);
-        //Switch the object to the new direction and process the movement
         ProcessMovement(delta);
         FaceDirection();
     }
@@ -102,26 +93,11 @@ public class Character : KinematicBody2D
     public void Move(float delta)
     {
         Movement.Move(this, delta);
-
-        bool isGrounded = CheckIsGrounded();
-        // bool isGrounded = IsOnFloor();
-        Movement.IsGrounded = isGrounded;
-        // if (isGrounded)
-        //     Movement.Friction = SurfaceFriction;
-        // else
-        //     Movement.Friction = EnvironmentFriction;
-
-        // Movement.ApplyFriction();
+        Movement.IsGrounded = CheckIsGrounded();
     }
 
     protected bool CheckIsGrounded()
     {
-        // foreach (RayCast2D ray in floorRaycasts.GetChildren())
-        //     if (ray.IsColliding())
-        //         return true;
-
-        // return false;
-
         return IsOnFloor();
     }
 
@@ -145,7 +121,6 @@ public class Character : KinematicBody2D
 
     public virtual bool OnHit(Bullet bullet)
     {
-        // PlayAnimation(ANIMATION_BLINK);
         DoDamage(bullet.Damage, bullet.Direction);
         return true;
     }
@@ -180,10 +155,6 @@ public class Character : KinematicBody2D
     {
         Alive = false;
         Vulnerable = false;
-        // PlayAnimation(ANIMATION_DIE);
-        //Make inactive
-        // CollisionLayer = 1 << 6;
-        // CollisionLayer = MoonHunter.PhysicsLayers.Level;
     }
 
     public void OnDissapeared()

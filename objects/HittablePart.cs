@@ -26,19 +26,4 @@ public class HittablePart : StaticBody2D
 
         owner.DoDamage(damage, dir);
     }
-
-    // public void OnBodyEntered(Node body)
-    // {
-    //     // GD.Print("Hit !: " + body);
-    //     if (body is Bullet)
-    //     {
-    //         OnHit((Bullet)body);
-    //         return;
-    //     }
-
-    //     if (body is KinematicBody2D)
-    //     {
-    //         GD.Print("Hurt player: " + body);
-    //     }
-    // }
 }

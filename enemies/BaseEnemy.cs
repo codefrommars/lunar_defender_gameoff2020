@@ -45,7 +45,7 @@ public class BaseEnemy : Character
         MoonHunter.Instance.AddExplosion(GlobalPosition);
         MoonHunter.Instance.AddLoot(GlobalPosition, MoonHunter.Constants.DEFAULT_LOOT, 5);
         //
-        SoundManager.Instance.PlayRandomExplosion(); //Explosion0AudioPlayer.Play();
+        SoundManager.Instance.PlayRandomExplosion();
 
         MoonHunterState.EnemiesDestroyed += 1;
         OnDissapeared();
@@ -66,15 +66,6 @@ public class BaseEnemy : Character
     {
         Vector2 direction = GlobalPosition.DirectionTo(target);
         return ShootAt(bulletType, position, direction.Angle());
-        // Vector2 direction = GlobalPosition.DirectionTo(target);
-
-        // Bullet bullet = MoonHunter.Instance.NewProjectile<Bullet>(bulletType);
-        // bullet.Position = position;
-
-        // bullet.SetBulletRotation(direction.Angle());
-
-        // return bullet;
-
     }
 
     public virtual void SetParameters(params object[] parameters)
@@ -87,67 +78,5 @@ public class BaseEnemy : Character
         bullet.Damage = MoonHunter.Constants.DEFAULT_BULLET_ENEMY_DAMAGE;
         bullet.Speed = 500;
     }
-
-    // public override bool OnHit(Bullet bullet)
-    // {
-    //     if (!Vulnerable)
-    //         return false;
-
-    //     // bullet.DidHit();
-    //     return base.OnHit(bullet);
-    // }
-
-    // public void OnBodyEntered(Node body)
-    // {
-    //     // GD.Print("Hit !: " + body);
-    //     if (body is Bullet)
-    //     {
-    //         OnHit((Bullet)body);
-    //         return;
-    //     }
-
-    //     if (body is KinematicBody2D)
-    //     {
-    //         GD.Print("Hurt player: " + body);
-    //     }
-    // }
-    // public override void _PhysicsProcess(float delta)
-    // {
-    //     bool isInBounds = IsInCameraBounds(GlobalPosition);
-
-    //     if (!isInBounds)
-    //     {
-    //         if (!atSpawn)
-    //         {
-    //             bool spawnInBounds = IsInCameraBounds(spawnPosition);
-    //             if (!spawnInBounds)
-    //             {
-    //                 GlobalPosition = spawnPosition;
-    //                 atSpawn = true;
-    //                 SetInitialState();
-    //             }
-    //         }
-    //     }
-    //     else
-    //     {
-    //         base._PhysicsProcess(delta);
-    //         atSpawn = false;
-    //     }
-
-    // }
-
-    // protected virtual void SetInitialState()
-    // {
-
-    // }
-
-    // protected bool IsInCameraBounds(Vector2 position)
-    // {
-    //     Rect2 visibleRect = MoonHunter.Instance.Camera.GetVisibleRect();
-    //     visibleRect.Size *= new Vector2(1.25f, 1.0f);
-
-    //     return visibleRect.HasPoint(position);
-    // }
-
 
 }

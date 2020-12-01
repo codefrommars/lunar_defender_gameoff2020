@@ -12,10 +12,8 @@ public class MoonHunterState
         Beam
     };
 
-    public int Lives { get; set; }
     public LevelManager.LevelInfo CurrentLevel { get; set; }
     public string LastSaveStage { get; set; } = "Start";
-    // public int Ammo { get; set; }
 
     public static long Shots;
     public static long Mines;
@@ -30,23 +28,14 @@ public class MoonHunterState
 
     public MoonHunterState()
     {
-        // Lives = 3;
         CurrentLevel = LevelManager.Levels.LevelTest;
-        // GD.Print("Started mission: " + StartDate);
     }
 
     public bool OnPlayerDied()
     {
-        // Lives--;
         DeathsRestarts++;
-        //return Lives > 0;
         return true;
     }
-
-    // public void ClaimLoot(Loot loot)
-    // {
-    //     Ammo += loot.Ammount;
-    // }
 
     public void UnlockPowerup(Powerup powerup)
     {
@@ -60,9 +49,6 @@ public class MoonHunterState
 
     public string GetMissionCompleted()
     {
-        // DateTime now = DateTime.Now;
-        // GD.Print("Completed mission at: " + now);
-        // TimeSpan gameTime = now.Subtract(StartDate);
         ulong now = OS.GetUnixTime();
 
         ulong elapsed = now - StartDate;

@@ -9,7 +9,6 @@ public class LevelScriptRunner : Node
 
         if (Script.Act(delta))
         {
-            //It's done. Send a signal or something ??
             OnCompleted();
             return;
         }

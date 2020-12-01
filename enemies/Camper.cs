@@ -15,8 +15,6 @@ public class Camper : BaseEnemy
 
     public FSM.State STATE_MOVING { get; protected set; }
     public TimedState STATE_AIMING { get; protected set; }
-    // public WaitState STATE_TURNING { get; protected set; }
-    // public EpsilonState STATE_SELECT_DIRECTION { get; protected set; }
     public FSM.State STATE_SHOOTING { get; protected set; }
 
     private float TurnTime = 0.1f;
@@ -61,9 +59,6 @@ public class Camper : BaseEnemy
     protected override FSM BuildStateMachine()
     {
         STATE_MOVING = new FSM.State(OnMovingUpdate) { Name = "Moving", OnExit = StopCar };
-        // STATE_SELECT_DIRECTION = new EpsilonState(SelectRandomDirection, STATE_MOVING);
-
-        // STATE_TURNING = new WaitState(TurnTime, STATE_MOVING) { Name = "Turning", OnEnter = OnTurningEnter, OnExit = OnTurningExit };
         STATE_AIMING = new TimedState(3.0f, OnAimUpdate)
         {
             Name = "Aiming",
@@ -73,16 +68,6 @@ public class Camper : BaseEnemy
 
         return new FSM(STATE_NO_ACTION);
     }
-
-    // protected void OnMovingEnter()
-    // {
-    //     // statusAnimationPlayer.PlaybackSpeed = 1.0f;
-    //     // bool reverse = Movement.Horizontal == -1;
-    //     // if( reverse )
-    //     // wheelsPlayer.PlaybackSpeed
-
-    //     // MoonHunter.Instance.GetRandomSign();
-    // }
 
     protected void SelectRandomDirection()
     {
@@ -123,7 +108,6 @@ public class Camper : BaseEnemy
 
     protected void OnMovingExit()
     {
-        // statusAnimationPlayer.PlaybackSpeed = 2.0f;
 
     }
 
@@ -134,22 +118,12 @@ public class Camper : BaseEnemy
 
         return frontFloorRay.IsColliding() && !frontRay.IsColliding();
     }
-    // protected bool HasFloor()
-    // {
-    //     if (MovingBack)
-    //         return backFloorRay.IsColliding();
 
-    //     return frontFloorRay.IsColliding();
-    // }
 
     protected FSM.State OnMovingUpdate(float delta)
     {
-        // debugLabel.Text = Movement.IsGrounded + "";
         if (Movement.IsGrounded && !CanMove())
             Turn();
-        //return STATE_TURNING;
-        // if (Movement.IsGrounded && HasObstacle())
-        //     return STATE_TURNING;
 
         movingTimeLeft -= delta;
         if (movingTimeLeft < 0)
@@ -160,10 +134,12 @@ public class Camper : BaseEnemy
 
         return STATE_MOVING;
     }
+
     protected void StartAiming()
     {
         STATE_AIMING.ResetTime();
     }
+
     protected FSM.State OnAimUpdate(float delta)
     {
         if (STATE_AIMING.IsOver)
@@ -183,11 +159,7 @@ public class Camper : BaseEnemy
 
     protected void Turn()
     {
-        // Movement.Horizontal = -1 * lastOrientation;
-
         SetMovementOrientation(-1 * lastOrientation);
-        // Movement.ApplyMotion(Movement.Horizontal);
-        // Move(0.001f);
     }
 
     protected void StopCar()
@@ -210,7 +182,6 @@ public class Camper : BaseEnemy
 
     public virtual void Shoot()
     {
-        // Bullet bullet = ShootAt(BulletType, GlobalPosition, MoonHunter.Instance.Player.GlobalPosition);
         Bullet bullet = ShootAt(BulletType, cannonPosition.GlobalPosition, cannonHolder.Rotation);
         ConfigureBullet(bullet);
     }

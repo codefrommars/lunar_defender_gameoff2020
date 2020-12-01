@@ -13,7 +13,6 @@ public class HUD : Node2D
     private Sprite[] machineBars;
     private Label machineEnergyLabel;
 
-    // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         helmet = GetNode<Sprite>("PlayerEnergy/HUD_helmet");
@@ -37,7 +36,6 @@ public class HUD : Node2D
             machineBars[i] = GetNode<Sprite>("MachineEnergy/HUD_bar" + (i + 1));
     }
 
-    //  // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(float delta)
     {
         int playerEnergy = MoonHunter.Instance.Player.Energy;

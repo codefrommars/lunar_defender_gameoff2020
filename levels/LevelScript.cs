@@ -2,7 +2,6 @@ using Godot;
 
 public class ScriptAction
 {
-    //Returns true if the action is completed
     public virtual bool Act(float delta)
     {
         return true;
@@ -312,18 +311,6 @@ public class SpawnUntilKilledAction : ScriptAction
         return CompleteIf(!enemy.Alive);
     }
 }
-
-// public class WaitForEnemyWave : ScriptActionSequence
-// {
-
-//     public WaitForEnemyWave(bool loop = false, params ScriptAction[] list) : base(loop, list) { }
-
-//     public override bool Act(float delta)
-//     {
-//         base.Act(delta);
-//         return CompleteIf(MoonHunter.Instance.GetTargetEnemiesCount() <= 0);
-//     }
-// }
 
 public class ShowMessageAction : ScriptAction
 {

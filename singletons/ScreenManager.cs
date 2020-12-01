@@ -24,8 +24,7 @@ public class ScreenManager : Node2D
     {
         fadeAnimationPlayer = GetNode<AnimationPlayer>("FadeAnimationPlayer");
         Instance = this;
-
-        // This grabs the title (main screen)
+        
         Viewport root = GetTree().Root;
         CurrentScene = root.GetChild(root.GetChildCount() - 1);
         FadeIn();
@@ -35,13 +34,9 @@ public class ScreenManager : Node2D
 
     public GameplayScreen GoToGameplay(MoonHunterState gameState)
     {
-
         GameplayScreen screen = (GameplayScreen)gameplayScreen.Instance();
-        // GD.Print("Going to screen: " + screen);
         PackedScene levelScene = GD.Load<PackedScene>(gameState.CurrentLevel.LevelFile);
         screen.CurrentLevel = (BaseLevel)levelScene.Instance();
-        // screen.CurrentStage = MoonHunter.Instance.LevelManager.GetStage(gameState.LastSaveStage);
-        // screen.Background = MoonHunter.Instance.LevelManager.GetBackground();
 
         GotoScreen(screen);
 
@@ -94,10 +89,6 @@ public class ScreenManager : Node2D
     {
         fadeAnimationPlayer.PlaybackSpeed = 1 / duration;
         fadeAnimationPlayer.Play("FadeIn");
-        // Tween tween = new Tween();
-        // AddChild(tween);
-        // tween.InterpolateProperty(CurrentScene, "modulate", new Color(0, 0, 0, 1), new Color(1, 1, 1, 1), duration);
-        // tween.Start();
     }
 
     private void ConnectOneShotCallback(string callbackMethod, Godot.Collections.Array args = null, ConnectFlags flags = 0)

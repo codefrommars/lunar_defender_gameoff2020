@@ -144,9 +144,9 @@ public class WaitState : FSM.State
 
     private FSM.State OnTimeUp()
     {
-        time = 0;//Automatic reset
+        time = 0;
         cycles++;
-        if (cycles < Times)//completed
+        if (cycles < Times)
         {
             OnReenterCallback?.Invoke();
             return this;

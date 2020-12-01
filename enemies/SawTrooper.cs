@@ -49,7 +49,6 @@ public class SawTrooper : BaseEnemy
 
     protected FSM.State OnMovingUpdate(float delta)
     {
-        // debugLabel.Text = Movement.IsGrounded + "";
         if (Movement.IsGrounded && HasObstacleOrVoid())
             return STATE_TURNING;
 

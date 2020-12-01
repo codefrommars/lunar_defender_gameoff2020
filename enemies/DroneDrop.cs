@@ -8,12 +8,10 @@ public class DroneDrop : BaseEnemy
     private Tween moveTween;
     private float floatingTime;
 
-    //
     private float dropFlyingDuration = 10.0f;
     private float leaveDuration = 5.0f;
     private float interstateDuration = 1.0f;
 
-    //Parameters
     public Vector2 DropPlace { get; set; }
     public string DropGroup { get; set; }
     public string DropType { get; set; }
@@ -59,7 +57,6 @@ public class DroneDrop : BaseEnemy
         {
             OnEnter = OnMovingToEnter,
             OnExit = OnMovingToExit
-            // OnReenterCallback = OnMovingToExit
         };
 
 
@@ -68,8 +65,6 @@ public class DroneDrop : BaseEnemy
 
     public void MoveTo(Vector2 target, float duration)
     {
-        //Vector2 target = MoonHunter.Instance.RelativeToGlobal(percentage);
-        // Vector2 target = position;
         moveTween.InterpolateProperty(this, "position", Position, target, duration);
         moveTween.Start();
     }
@@ -84,7 +79,6 @@ public class DroneDrop : BaseEnemy
         floatingTime += delta;
         float y = (float)(20 * Math.Sin(floatingTime * 2 * Math.PI));
         body.Position = new Vector2(0, y);
-
     }
 
     public void OnMovingToEnter()

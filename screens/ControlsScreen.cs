@@ -10,8 +10,6 @@ public class ControlsScreen : Node2D
     {
         startButton = GetNode<Button>("StartButton");
         startButton.GrabFocus();
-        // SoundManager.Instance.StartGameAudioPlayer.Play();
-        // OnStartPressed();
     }
 
     public void OnStartPressed()

@@ -16,7 +16,6 @@ public class Hunter : Character
     public TimedState STATE_HURT { get; protected set; }
     public FSM.State STATE_DASH { get; protected set; }
 
-    //private bool dashEnabled = true;
     private AnimationPlayer invincibleAnimPlayer;
     private AnimationPlayer bodyAnimationPlayer;
     private RayCast2D boxBuildRay;
@@ -49,7 +48,6 @@ public class Hunter : Character
         get { return hp; }
     }
 
-    // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         weaponSlot = GetNode<Position2D>("Body/WeaponSlot");
@@ -94,8 +92,6 @@ public class Hunter : Character
 
         STATE_DASH = new FSM.State(OnDashUpdate, OnDashStart, OnDashEnded) { Name = "Dash" };
 
-
-        //Invencibility
         STATE_VULNERABLE = new FSM.State();
         STATE_HURT_INVINCIBLE = new WaitState(HitInvencibility, STATE_VULNERABLE)
         {
@@ -104,11 +100,7 @@ public class Hunter : Character
             OnExit = OnHurtInvincibleExit
         };
 
-
-
         invencibilityMachine = new FSM(STATE_VULNERABLE);
-        // STATE_HURT.OnEnter = OnHitEnter;
-        // STATE_HURT.OnExit = OnHitExit;
 
         return new FSM(STATE_IDLE);
     }
@@ -119,14 +111,10 @@ public class Hunter : Character
     {
         Vector2 direction = InputManager.Direction;
         invencibilityMachine.Update(delta);
-        // debugLabel.Text = machine.CurrentState.Name;
-
-        //Build ?
 
         if (Input.IsActionJustPressed("ui_1") && MoonHunter.Instance.GameState.IsUnlocked(MoonHunterState.Powerup.Blocks))
         {
             boxProp.Visible = true;
-            // PromptBuildBox();
         }
 
         if (Input.IsActionJustReleased("ui_1") && MoonHunter.Instance.GameState.IsUnlocked(MoonHunterState.Powerup.Blocks))
@@ -151,20 +139,11 @@ public class Hunter : Character
             GetTree().Quit();
         }
 
-        // if (Input.IsActionJustPressed("ui_slow"))
-        // {
-        //     slowDown = !slowDown;
-        //     if (slowDown)
-        //         Engine.TimeScale = 0.1f;
-        //     else
-        //         Engine.TimeScale = 1;
-        // }
-
         if (boxProp.Visible)
         {
             CalculateBoxPropColor();
         }
-        //TODO Fix head orientation
+
         head.Rotation = weapon.Rotation * 0.5f;
         base._Process(delta);
     }
@@ -194,11 +173,9 @@ public class Hunter : Character
             return;
         }
 
-        // boxBuildRay.ForceRaycastUpdate();
-        // Vector2 vec = boxBuildRay.GetCollisionPoint();
         int overlapping = boxBuildArea.GetOverlappingBodies().Count;
         if (overlapping > 0)
-        { //Cant build
+        { 
             SoundManager.Instance.CancelAudioPlayer.Play();
             return;
         }
@@ -275,7 +252,6 @@ public class Hunter : Character
 
     public void Hurt(int damage, int direction = 0)
     {
-        //Face the damage direction
         hurtDirection = direction;
         machine.ForceState(STATE_HURT);
         LoseHP(damage);
@@ -479,7 +455,6 @@ public class Hunter : Character
 
         SoundManager.Instance.HurtAudioPlayer.Play();
 
-        // PlayAnimation(ANIMATION_BLINK);
         hurtPose.Visible = true;
         mesh.Visible = weapon.Visible = false;
 
@@ -522,7 +497,6 @@ public class Hunter : Character
     public void OnHurtInvincibleExit()
     {
         invincibleAnimPlayer.Play("None");
-        // invincibleAnimPlayer.Stop();
         Vulnerable = true;
     }
 
@@ -532,12 +506,6 @@ public class Hunter : Character
     {
         Loot loot = (Loot)body;
         SoundManager.Instance.EnergyCoinAudioPlayer.Play();
-        //Find loot type and ammount
-        // MoonHunter.Instance.GameState.ClaimLoot(loot);
-
-        // int prevHp = hp;
-
-        // if (hp > MoonHunter.Constants.PLAYER_MAX_ENERGY)
         int newHp = hp + loot.Ammount;
         if (newHp > MoonHunter.Constants.PLAYER_MAX_ENERGY)
         {
@@ -545,7 +513,6 @@ public class Hunter : Character
         }
         int gained = newHp - hp;
         hp += gained;
-        // hp += loot.Ammount;
         MoonHunterState.LootCollected += gained;
         loot.QueueFree();
     }
@@ -553,10 +520,7 @@ public class Hunter : Character
     public override void Die()
     {
         machine.ForceState(STATE_NO_ACTION);
-        // base.OnDied();
-        // PlayAnimation(ANIMATION_DIE);
         Enabled = false;
-        // machine.ForceState(STATE_NO_ACTION);
         MoonHunter.Instance.PlayerDied();
     }
 

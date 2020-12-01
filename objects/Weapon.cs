@@ -32,7 +32,6 @@ public class Weapon : Node2D
         return (Weapon)w.Instance();
     }
 
-    // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         cannon = GetNode<Position2D>("Cannon");
@@ -58,16 +57,9 @@ public class Weapon : Node2D
 
 
         bullet.SetBulletRotation(GlobalRotation);
-        // bullet.Rotation = GlobalRotation;
-        // shootSound.Play();
         SoundManager.Instance.ShotAudioPlayer.Play();
 
         MoonHunterState.Shots += 1;
-        // Hunter.Movement.Recoil(-aimDirection, 10 * MoonHunter.Constants.TILE_SIZE);
-
-        //PlayAnimation(ANIMATION_RECOIL);
-        // owner.Movement.ApplyForce(-bullet.Direction * 0.5f * 16 * 16);
-        //owner.Movement.ApplyForce(new Vector2(-owner.Movement.FacingDirection, -1) * 2f * 16 * 16);
     }
 
     public override void _PhysicsProcess(float delta)
@@ -83,7 +75,6 @@ public class Weapon : Node2D
     {
         LaserBeam laserBeam = MoonHunter.Instance.AddLaserBeam(cannon.GlobalPosition, cannon.GlobalRotation);
         laserBeam.Shoot();
-        // cannon.AddChild(laserBeam);
     }
 
     protected void PollDirection()
@@ -105,7 +96,7 @@ public class Weapon : Node2D
         if (InputManager.ShootPressed)
         {
             Shoot();
-            return STATE_TIMEOUT;//.Reset(TimeoutDuration);
+            return STATE_TIMEOUT;
         }
 
         return STATE_READY;

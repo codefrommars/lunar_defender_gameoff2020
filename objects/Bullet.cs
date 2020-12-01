@@ -29,17 +29,10 @@ public class Bullet : KinematicBody2D
 
     public override void _PhysicsProcess(float delta)
     {
-        //Position += direction * Speed * delta;
         KinematicCollision2D collision = MoveAndCollide(Direction * Speed * delta, false);
         if (collision != null)
         {
             Object collider = collision.Collider;
-
-            // if (collider is TileMap)
-            // {
-            //     OnCollidedWithTileMap(collision);
-            //     return;
-            // }
 
             if (collider is HittablePart)
             {
@@ -69,27 +62,9 @@ public class Bullet : KinematicBody2D
 
     public void DidHit(HittablePart part, KinematicCollision2D collision)
     {
-        // MoonHunter.Instance.AddBulletHit(collision.Position);
         SoundManager.Instance.HitEnemiesAudioPlayer.Play();
         QueueFree();
     }
-
-    // public void OnAreaEntered(Area2D area)
-    // {
-    //     if (area is HittablePart)
-    //         ((HittablePart)area).OnHit(this);
-
-    //     QueueFree();
-    // }
-
-    // public void OnBodyEntered(Node body)
-    // {
-    //     if (body is TileMap)
-    //     {
-    //         MoonHunter.Instance.AddBulletExplosion(GlobalPosition, Rotation);
-    //         QueueFree();
-    //     }
-    // }
 
     public void DisintegrateBullet(KinematicCollision2D collision)
     {

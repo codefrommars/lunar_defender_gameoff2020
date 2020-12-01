@@ -31,7 +31,6 @@ public class Saw : BaseEnemy
 
     protected override FSM BuildStateMachine()
     {
-        // Movement.GravityScale = 0;
         STATE_WALKING = new FSM.State(OnWalkingUpdate);
         return new FSM(STATE_WALKING);
     }

@@ -17,7 +17,6 @@ public class GameplayScreen : Node2D
 
     public Hunter Player { get; private set; }
 
-    //This is set when changing the scene
     public Stage CurrentStage { get; set; }
     public BaseLevel CurrentLevel { get; set; }
     public Node Background { get; set; }
@@ -26,13 +25,9 @@ public class GameplayScreen : Node2D
 
     private FSM.State STATE_NORMAL, STATE_TRANSITIONING;
 
-
-
-    // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         projectilesNode = GetNode<Node2D>("Projectiles");
-        // GD.Print("Loaded GameplayScreen " + this);
         stageNode = GetNode<Node2D>("Stage");
         Entities = GetNode<Node2D>("Entities");
         MainCamera = GetNode<TransitionCamera>("MainCamera");
@@ -57,30 +52,17 @@ public class GameplayScreen : Node2D
         stageNode.AddChild(level);
 
         Hunter hunter = Hunter.Instance();
-        //Moved to ready
         Entities.AddChild(hunter);
 
         this.Player = hunter;
-
-        //Moved to ready
-        // Rect2 rect = level.GetExtentsRect();
-        // SetCameraLimits(rect);
-        // CurrentStage = level.GetInitialStage();
         CurrentStage = level.GetStage(MoonHunter.Instance.GameState.LastSaveStage);
-
-        //if (CurrentStage.HasPlayerSpawn())
         hunter.GlobalPosition = CurrentStage.GetPlayerSpawn();
-        // else
-        //     hunter.GlobalPosition = level.PlayerStart.GlobalPosition;
 
         SetCameraLimits(CurrentStage.GetGlobalRect());
 
         MainCamera.Target = hunter;
         MainCamera.Current = true;
         MainCamera.LockTarget = CurrentStage.LockPlayer;
-
-        // ParallaxBackground p = (ParallaxBackground)background;
-        // AddChild(background);
 
         SetupLevelStage(!initial);
 
@@ -93,7 +75,6 @@ public class GameplayScreen : Node2D
     {
         if (runStageScript)
             CurrentStage.Start();
-        // MoonHunter.Instance.StartLevelScript(script);
     }
 
     public void SetCameraLimits(Rect2 rect)
@@ -109,11 +90,9 @@ public class GameplayScreen : Node2D
 
     public void AddProjectile(Node projectile)
     {
-        // if (projectilesNode != null)
         projectilesNode.AddChild(projectile);
     }
 
-    //This is a deferred call
     private void TransitionEnded(StagePortal portal)
     {
         SetupLevelStage(true);
@@ -124,8 +103,6 @@ public class GameplayScreen : Node2D
     {
         string nextStageName = transition.GetNextStageName();
         Stage nextStage = CurrentLevel.GetStage(nextStageName);
-
-        // StageTransition mirrorTransition = transition.GetMirror(nextStage);
 
         MainCamera.ExecutePortalTransition(nextStage, transition);
 
@@ -142,11 +119,6 @@ public class GameplayScreen : Node2D
 
     public void FreeEnemiesInGroup(string group)
     {
-        // Godot.Collections.Array array = GetTree().GetNodesInGroup(group);
-        // GD.Print("Freeing Enemies in group: " + group);
-        // foreach (Node node in array)
-        //     node.QueueFree();
-
         GetTree().CallGroup(group, "queue_free");
     }
 

@@ -7,7 +7,6 @@ public struct Transition
 {
     public Vector2 initialPosition, targetPosition;
     public Rect2 initialLimits, targetLimits;
-    // public StagePortal portal, mirrorPortal;
     public Stage nextStage;
     public StageTransition portal, mirrorPortal;
 

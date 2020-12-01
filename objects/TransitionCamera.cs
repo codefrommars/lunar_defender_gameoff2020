@@ -52,7 +52,6 @@ public class TransitionCamera : Camera2D
         return position;
     }
 
-    //Visible rectangle in global coords
     public Rect2 GetVisibleRect()
     {
         Transform2D transform = GetCanvasTransform();
@@ -96,12 +95,8 @@ public class TransitionCamera : Camera2D
         if (transition.mirrorPortal != null)
             transition.mirrorPortal.Active = true;
 
-        // BaseStage newStage = MoonHunter.Instance.GetStageFromCurrentLevel(transition.mirrorPortal.GetCurrentStageName());
-
-
         Stage newStage = transition.nextStage;
         SetLimits(newStage.GetGlobalRect());
-        // SetLimits(newStage.GetExtentsRect());
 
         int vertical = (int)transition.portal.Direction.y;
         if (vertical == 1)
@@ -112,7 +107,6 @@ public class TransitionCamera : Camera2D
         {
             MoonHunter.Instance.Player.ForceJump();
         }
-        // MoonHunter.Instance.Player.Movement.GravityScale = 1.0f;
         MoonHunter.Instance.Player.Enabled = true;
 
         LockTarget = newStage.LockPlayer;
@@ -124,8 +118,6 @@ public class TransitionCamera : Camera2D
         LimitRight = (int)(rect.Position.x + rect.Size.x);
         LimitTop = (int)rect.Position.y;
         LimitBottom = (int)(rect.Position.y + rect.Size.y);
-
-        // GD.Print(rect);
     }
 
     private Rect2 GetLimits()
@@ -136,18 +128,6 @@ public class TransitionCamera : Camera2D
         return rect;
     }
 
-    // public void ExecutePortalTransition(StagePortal portal, StagePortal mirrorPortal)
-    // {
-    //     transition.portal = portal;
-    //     transition.mirrorPortal = mirrorPortal;
-
-    //     float transitionDuration = MoonHunter.Constants.PORTAL_TRANSITION_DURATION;
-    //     Hunter player = MoonHunter.Instance.Player;
-    //     player.Enabled = false;
-
-    //     Vector2 to = portal.GetTransitionPosition(player);
-    //     StartTransition(to, portal.Direction, transitionDuration);
-    // }
     public void ExecutePortalTransition(Stage nextStage, StageTransition portal)
     {
         transition.portal = portal;

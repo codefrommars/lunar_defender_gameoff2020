@@ -43,7 +43,7 @@ public class StagePortal : Area2D
 
     public void OnPlayerEntered(Node body)
     {
-        // MoonHunter.Instance.TriggerTransition(this);
+
     }
 
     public void OnPlayerExited(Node body)
